@@ -1,8 +1,8 @@
 package com.randradee.studies.security.services;
 
-import com.randradee.studies.security.domain.Product;
-import com.randradee.studies.security.domain.ProductRequestDTO;
-import com.randradee.studies.security.domain.ProductResponseDTO;
+import com.randradee.studies.security.domain.product.Product;
+import com.randradee.studies.security.domain.product.ProductRequestDTO;
+import com.randradee.studies.security.domain.product.ProductResponseDTO;
 import com.randradee.studies.security.repositories.ProductRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

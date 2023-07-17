@@ -1,4 +1,4 @@
-package com.randradee.studies.security.domain;
+package com.randradee.studies.security.domain.product;
 
 import jakarta.persistence.*;
 
