@@ -1,16 +1,13 @@
 package com.randradee.studies.security.controllers;
 
-import com.randradee.studies.security.domain.user.AuthenticationDTO;
-import com.randradee.studies.security.domain.user.RegisterDTO;
-import com.randradee.studies.security.domain.user.User;
-import com.randradee.studies.security.domain.user.UserRole;
+import com.randradee.studies.security.domain.user.*;
+import com.randradee.studies.security.infra.security.TokenService;
 import com.randradee.studies.security.services.AuthorizationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,12 +21,17 @@ public class AuthenticationController {
     AuthenticationManager authenticationManager;
     @Autowired
     AuthorizationService authorizationService;
+    @Autowired
+    TokenService tokenService;
 
     @PostMapping(value = "/login")
-    public ResponseEntity<String> login(@RequestBody @Valid AuthenticationDTO data) {
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid AuthenticationDTO data) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var auth = authenticationManager.authenticate(usernamePassword);
-        return ResponseEntity.ok().body("Usuário autenticado com sucesso");
+
+        var token = tokenService.generateToken((User) auth.getPrincipal());
+
+        return ResponseEntity.ok().body(new LoginResponseDTO(token));
     }
 
     @PostMapping(value = "/register")
