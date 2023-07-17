@@ -10,7 +10,7 @@ import java.util.List;
 
 @Table(name = "users")
 @Entity(name = "users")
-public class Users implements UserDetails {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
@@ -18,10 +18,16 @@ public class Users implements UserDetails {
     private String password;
     private UserRole role;
 
-    public Users() {
+    public User() {
     }
 
-    public Users(String id, String login, String password, UserRole role) {
+    public User(String login, String password, UserRole role) {
+        this.login = login;
+        this.password = password;
+        this.role = role;
+    }
+
+    public User(String id, String login, String password, UserRole role) {
         this.id = id;
         this.login = login;
         this.password = password;
